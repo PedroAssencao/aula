@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: gray;
+        }
+
+        .Quadro {
+            width: 40%;
+            height: 30vh;
+            background: white;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            .Quadro {
+                width: 90%;
+            }
+
+            .container {
+                flex-direction: column;
+
+            }
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80vh;
+            gap: 20px;
+    
+        }
+
+        .btn{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div id="Pergunta" class="Quadro">O rato Roeu a Roupa do Rei de </div>
+        <div id="resultado" class="Quadro"></div>  
+    </div>
+    <div class="btn">
+        <button onclick="fala.start()">gravar</button>
+        <button onclick="fala.stop()">parar</button>
+    </div>
+</body>
+<script>
+
+const resultado = document.getElementById('resultado');
+
+class SpeechApi {
+    constructor() {
+        const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        this.api = new Recognition();
+        this.api.continuous = true;
+        this.api.lang = "pt-BR";
+        this.api.onresult = e => resultado.textContent += e.results[e.resultIndex][0].transcript;
+    }
+
+    start() { this.api.start(); }
+    stop() { this.api.stop(); }
+}
+
+const fala = new SpeechApi();
+
+
+
+</script>
+
+</html>
